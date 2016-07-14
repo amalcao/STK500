@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="stk500" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.ear"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/icedtea-sound.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/RXTXcomm.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.intelhexparser.classpath">
+    <pathelement location="${basedir}/../../../Net/java-intelhex-parser/dist/IntelHexParser.jar"/>
+  </path>
+  
+  
+  <!-- Global Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module STK500 -->
+  
+  <dirname property="module.stk500.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.stk500" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.stk500" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.stk500" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.stk500" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="stk500.output.dir" value="${module.stk500.basedir}/out/production/STK500"/>
+  <property name="stk500.testoutput.dir" value="${module.stk500.basedir}/out/test/STK500"/>
+  
+  <path id="stk500.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="stk500.module.production.classpath">
+    <path refid="${module.jdk.classpath.stk500}"/>
+    <path refid="library.intelhexparser.classpath"/>
+  </path>
+  
+  <path id="stk500.runtime.production.module.classpath">
+    <pathelement location="${stk500.output.dir}"/>
+    <path refid="library.intelhexparser.classpath"/>
+  </path>
+  
+  <path id="stk500.module.classpath">
+    <path refid="${module.jdk.classpath.stk500}"/>
+    <pathelement location="${stk500.output.dir}"/>
+    <path refid="library.intelhexparser.classpath"/>
+  </path>
+  
+  <path id="stk500.runtime.module.classpath">
+    <pathelement location="${stk500.testoutput.dir}"/>
+    <pathelement location="${stk500.output.dir}"/>
+    <path refid="library.intelhexparser.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.stk500">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.stk500">
+    <patternset refid="excluded.from.module.stk500"/>
+  </patternset>
+  
+  <path id="stk500.module.sourcepath">
+    <dirset dir="${module.stk500.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.stk500" depends="compile.module.stk500.production,compile.module.stk500.tests" description="Compile module STK500"/>
+  
+  <target name="compile.module.stk500.production" description="Compile module STK500; production classes">
+    <mkdir dir="${stk500.output.dir}"/>
+    <javac destdir="${stk500.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.stk500}/javac">
+      <compilerarg line="${compiler.args.stk500}"/>
+      <bootclasspath refid="stk500.module.bootclasspath"/>
+      <classpath refid="stk500.module.production.classpath"/>
+      <src refid="stk500.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.stk500"/>
+    </javac>
+    
+    <copy todir="${stk500.output.dir}">
+      <fileset dir="${module.stk500.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.stk500.tests" depends="compile.module.stk500.production" description="compile module STK500; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.stk500" description="cleanup module">
+    <delete dir="${stk500.output.dir}"/>
+    <delete dir="${stk500.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.stk500, clean.artifact.stk500:jar" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.stk500" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.stk500:jar" value="${basedir}/out/artifacts/STK500_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.STK500.jar" value="${artifacts.temp.dir}/STK500.jar"/>
+  </target>
+  
+  <target name="clean.artifact.stk500:jar" description="clean STK500:jar artifact output">
+    <delete dir="${artifact.output.stk500:jar}"/>
+  </target>
+  
+  <target name="artifact.stk500:jar" depends="init.artifacts, compile.module.stk500" description="Build &#39;STK500:jar&#39; artifact">
+    <mkdir dir="${artifact.output.stk500:jar}"/>
+    <jar destfile="${temp.jar.path.STK500.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${stk500.output.dir}"/>
+    </jar>
+    <copy file="${temp.jar.path.STK500.jar}" tofile="${artifact.output.stk500:jar}/STK500.jar"/>
+    <copy file="${basedir}/../../../Net/java-intelhex-parser/dist/IntelHexParser.jar" tofile="${artifact.output.stk500:jar}/IntelHexParser.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.stk500:jar" description="Build all artifacts">
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
